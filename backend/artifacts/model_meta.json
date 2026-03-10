@@ -1,0 +1,12 @@
+{
+  "model_type": "XGBoost",
+  "dataset": "Telco Customer Churn",
+  "n_train": 5634,
+  "n_test": 1409,
+  "churn_rate": 0.2653698707936959,
+  "accuracy": 0.7708,
+  "f1": 0.6141,
+  "precision": 0.5551,
+  "recall": 0.6872,
+  "roc_auc": 0.8435
+}

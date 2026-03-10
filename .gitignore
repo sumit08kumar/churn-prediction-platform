@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# ML artifacts — include in repo for deployment
+# (pkl + meta needed for Docker/Render builds)
+backend/artifacts/*.png
+backend/data/
+
+# MLflow
+mlruns/
+mlflow.db
+mlartifacts/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+*.env.local
