@@ -1,5 +1,8 @@
 """
 model.py — Model loading, prediction, and SHAP explanation logic.
+
+SHAP is an optional dependency. When not installed (e.g. Vercel serverless),
+the app still works — predictions are served without SHAP explanations.
 """
 
 import os
@@ -11,8 +14,15 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 import joblib
-import shap
 from sklearn.pipeline import Pipeline
+
+# SHAP is optional — heavy dep chain (shap → numba → llvmlite)
+try:
+    import shap
+    SHAP_AVAILABLE = True
+except ImportError:
+    shap = None
+    SHAP_AVAILABLE = False
 
 from ml.preprocess import prepare_single_sample, NUMERIC_FEATURES, CATEGORICAL_FEATURES
 
@@ -88,6 +98,9 @@ class ChurnModel:
 
     def _build_explainer(self):
         """Build a SHAP TreeExplainer on the XGBoost model."""
+        if not SHAP_AVAILABLE:
+            logger.info("SHAP not installed — explainability features disabled.")
+            return
         try:
             xgb_model = self.pipeline.named_steps["model"]
             self.explainer = shap.TreeExplainer(xgb_model)

@@ -5,13 +5,17 @@ pydantic==2.12.5
 scikit-learn==1.8.0
 imbalanced-learn==0.14.1
 xgboost==3.2.0
-shap==0.51.0
 pandas==2.2.3
 numpy==2.2.6
 joblib==1.5.3
 python-multipart==0.0.22
 
-# ─── Training only (not needed for Vercel deploy) ─────────────
+# ─── SHAP explainability (optional — heavy deps) ──────────────
+# Pulls numba → llvmlite (LLVM binaries).
+# Installed in Docker but NOT on Vercel serverless.
+# shap==0.51.0
+
+# ─── Training only (not needed for deploy) ────────────────────
 # Uncomment these when running ml/train.py locally:
 # optuna==4.7.0
 # mlflow==3.10.1

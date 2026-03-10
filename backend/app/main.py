@@ -27,6 +27,12 @@ from app.schemas import (
     BatchPredictionItem, ModelInfoResponse, HealthResponse, ShapResponse,
 )
 
+# Check if SHAP is available (optional heavy dependency)
+try:
+    from app.model import SHAP_AVAILABLE
+except ImportError:
+    SHAP_AVAILABLE = False
+
 logger = logging.getLogger("uvicorn")
 
 
@@ -218,8 +224,17 @@ async def explain(customer: CustomerInput):
 
     Returns SHAP values for top 15 features showing which factors
     increase or decrease churn risk for this specific customer.
+
+    Note: Requires the `shap` package. In serverless deployments where
+    shap is not installed, this endpoint returns a friendly error.
     """
     _check_model()
+    if not SHAP_AVAILABLE:
+        raise HTTPException(
+            status_code=501,
+            detail="SHAP explainability is not available in this deployment. "
+                   "Use the Docker deployment for full SHAP support.",
+        )
     try:
         result = churn_model.get_shap_explanation(customer.model_dump())
         return result
