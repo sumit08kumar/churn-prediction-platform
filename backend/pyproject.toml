@@ -1,0 +1,21 @@
+[project]
+name = "churniq-backend"
+version = "1.0.0"
+description = "ChurnIQ – Customer Churn Prediction API"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.135.1",
+    "uvicorn[standard]>=0.41.0",
+    "pydantic>=2.12.5",
+    "scikit-learn>=1.8.0",
+    "imbalanced-learn>=0.14.1",
+    "xgboost>=3.2.0",
+    "shap>=0.51.0",
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+    "joblib>=1.5.0",
+    "python-multipart>=0.0.22",
+]
+
+[project.scripts]
+app = "app.main:app"

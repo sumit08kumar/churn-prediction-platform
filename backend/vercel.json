@@ -1,5 +1,11 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
-  ]
+    { "source": "/(.*)", "destination": "/api/index.py" }
+  ],
+  "functions": {
+    "api/**/*.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{tests/**,ml/**,data/**,__pycache__/**,.venv/**,*.test.py,test_*.py,mlartifacts/**,mlruns/**}"
+    }
+  }
 }
