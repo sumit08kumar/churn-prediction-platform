@@ -51,21 +51,37 @@ jobs:
           npm install
           npm run build
 
-  # ─── Deploy to Render ─────────────────────────────────────────
-  deploy:
-    name: Deploy to Render
+  # ─── Deploy to Vercel ───────────────────────────────────────────
+  deploy-backend:
+    name: Deploy Backend to Vercel
     runs-on: ubuntu-latest
-    needs: [test-backend, build-frontend]
+    needs: [test-backend]
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Deploy Backend to Render
-        run: |
-          curl -X POST "${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}"
+      - uses: actions/checkout@v4
+      - name: Deploy Backend
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+          working-directory: ./backend
+          vercel-args: --prod
 
-      - name: Deploy Frontend to Render
-        run: |
-          curl -X POST "${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}"
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    runs-on: ubuntu-latest
+    needs: [build-frontend]
+    if: github.ref == 'refs/heads/main'
 
-      - name: Notify success
-        run: echo "✅ Deployment triggered successfully!"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy Frontend
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_FRONTEND_PROJECT_ID }}
+          working-directory: ./frontend
+          vercel-args: --prod
