@@ -1,23 +1,22 @@
-# ─── Runtime (API serving) ─────────────────────────────────────
+# ─── Runtime (API serving on Vercel) ───────────────────────────
 fastapi==0.135.1
-uvicorn[standard]==0.41.0
 pydantic==2.12.5
 scikit-learn==1.8.0
-imbalanced-learn==0.14.1
 xgboost==3.2.0
 pandas==2.2.3
 numpy==2.2.6
 joblib==1.5.3
 python-multipart==0.0.22
 
-# ─── SHAP explainability (optional — heavy deps) ──────────────
-# Pulls numba → llvmlite (LLVM binaries).
-# Installed in Docker but NOT on Vercel serverless.
-# shap==0.51.0
+# ─── Local development only ───────────────────────────────────
+# uvicorn[standard]==0.41.0
 
 # ─── Training only (not needed for deploy) ────────────────────
-# Uncomment these when running ml/train.py locally:
+# imbalanced-learn==0.14.1
 # optuna==4.7.0
 # mlflow==3.10.1
 # matplotlib==3.10.8
 # seaborn==0.13.2
+
+# ─── SHAP explainability (optional — heavy deps) ──────────────
+# shap==0.51.0
