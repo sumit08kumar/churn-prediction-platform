@@ -4,10 +4,16 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
 from sklearn.impute import SimpleImputer
-from imblearn.over_sampling import SMOTE
-from imblearn.pipeline import Pipeline as ImbPipeline
 import joblib
 import os
+
+# imblearn is only needed for training (SMOTE) — not for inference
+try:
+    from imblearn.over_sampling import SMOTE
+    from imblearn.pipeline import Pipeline as ImbPipeline
+except ImportError:
+    SMOTE = None
+    ImbPipeline = None
 
 # ─── Feature Groups ───────────────────────────────────────────────────────────
 NUMERIC_FEATURES = ["tenure", "MonthlyCharges", "TotalCharges"]

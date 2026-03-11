@@ -181,7 +181,7 @@ async def predict_batch_csv(file: UploadFile = File(...)):
     """
     _check_model()
 
-    if not file.filename.endswith(".csv"):
+    if not file.filename or not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
 
     contents = await file.read()

@@ -1,0 +1,24 @@
+# Training data — not needed for inference
+data/
+
+# Tests
+tests/
+
+# Training scripts (not used at runtime)
+ml/train.py
+
+# Image artifacts (not needed for API)
+artifacts/*.png
+
+# Caches
+__pycache__/
+.venv/
+*.pyc
+
+# Docker files
+Dockerfile
+
+# MLflow
+mlruns/
+mlartifacts/
+mlflow.db
